@@ -40,15 +40,15 @@ You can send bullet screen, adjust color, font and position
 
 >
 
->2.improve performance, reduce frame loss
+>2. improve performance, reduce frame loss
 
 >
 
->3.add video buffer and buffer effect
+>3. add video buffer and buffer effect
 
 >
 
->4.reduce web font
+>4. reduce web font
 
 >
 
@@ -64,19 +64,19 @@ You can send bullet screen, adjust color, font and position
 
 >
 
-> 2.change API
+> 2. change API
 
 >
 
-> 3.when there is a few bullet screen, those bullet screen will mainly shown on the top
+> 3. when there is a few bullet screen, those bullet screen will mainly shown on the top
 
 >
 
-> 4.you can add multiple players
+> 4. you can add multiple players
 
 >
 
-> *.If you want to use old version, please see OldEdition directory.
+> * If you want to use old version, please see OldEdition directory.
 
 
 
@@ -84,7 +84,7 @@ You can send bullet screen, adjust color, font and position
 
 
 
-**1**.add js and css and Jquery
+**1**. add js and css and Jquery
 
 
 
@@ -100,7 +100,7 @@ You can send bullet screen, adjust color, font and position
 
 ---
 
-**2**.create a div，set id=danmp
+**2**. create a div，set id=danmp
 
 
 
@@ -139,7 +139,7 @@ Please see instruction below to see how to send bullet screen to database
 
 ---
 
-**4** In above step, we use Jquery to create a player, then pass parameters(src, width, height). Actually, the method contains these parameters below. (all paramter are optional except video src)
+**4**. In above step, we use Jquery to create a player, then pass parameters(src, width, height). Actually, the method contains these parameters below. (all paramter are optional except video src)
 
 
 ```javascript
@@ -180,7 +180,7 @@ maxCountPerSec: 10      //maximal number of bullet screen every 1/10 second, pri
 
 ---
 
-**5** Introduce js object: danmu
+**5**. Introduce js object: danmu
 
 danmu has these attributes：
 
@@ -277,12 +277,12 @@ DanmuPlayer has a class called danmu-div (this is a Jquery plugin container, ple
 
 ---
 
-**7** DanmuPlayer contains a HTML5 video tag, all HTML5 video API can be used in DanmuPlayer, you can change the video time, the bullet screen stream will keep synchronous
+**7**. DanmuPlayer contains a HTML5 video tag, all HTML5 video API can be used in DanmuPlayer, you can change the video time, the bullet screen stream will keep synchronous
 
 ---
 
 
-**8** You can add multiple players in one page, but all players will have same keyboard shortcuts, so the keyboard event may not work
+**8**. You can add multiple players in one page, but all players will have same keyboard shortcuts, so the keyboard event may not work
 
 
 
