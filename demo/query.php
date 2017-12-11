@@ -7,7 +7,6 @@ mysql_query("set names 'utf8'"); //
 
 $sql="SELECT `danmu` FROM `danmu`";
 $query=mysql_query($sql); 
-//echo $danmu;
 echo "[";
 $first=0;
 while($row=mysql_fetch_array($query)){

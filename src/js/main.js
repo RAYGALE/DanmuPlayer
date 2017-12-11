@@ -1,12 +1,20 @@
 /**
- * 弹幕播放器核心
+ * Player Core
  * Created by acgit on 2015/7/23.
  * Copyright 2015 by Ruiko Of AcGit.cc
  * @license MIT
  *
- * 版本2.0 2015/08/12
+ * Version 2.0 2015/08/12
  */
 
+ /**
+ * Player Core
+ * Improved by Marvin on 2017/12/11.
+ * Copyright 2017 by Marvin
+ * @license MIT
+ *
+ * Version 1.0 2017/12/11
+ */
 
 ;
 (function ($) {
@@ -17,7 +25,7 @@
         this.options = options;
         $(element).data("paused", 1);
         var that = this;
-        //播放器全局样式
+        //player style
         this.$element.css({
             "position": "relation",
             //"left":this.options.left,
@@ -28,14 +36,14 @@
         });
 
 
-        //选择器规范
+        //selector
         this.$element.addClass("danmu-player");
         if (!$(element).attr("id"))
             $(element).attr("id", (Math.random() * 65535).toString());
         this.id = "#" + $(element).attr("id");
 
 
-        //弹幕层设置,使用了定制的jquery.danmu.js
+        //use jquery.danmu.js to create bullet layer
         this.$element.append('<div class="danmu-div"id="' + $(element).attr("id") + '-danmu-div" ></div>');
         $(this.id + " .danmu-div").danmu({
             width: "100%",
@@ -50,7 +58,7 @@
         });
 
 
-        //控件添加
+        //control button
         this.$element.css("height", this.$element.height() + 40);
         this.$element.append('<video class="danmu-video" src="' + options.src + '" width="' + options.width + '" height="' + options.height + '"></video>');
         this.$element.append('<div class="danmu-player-load" ></div>');
@@ -75,25 +83,25 @@
         this.$ctrlMain.append('<div class="show-danmu  ctrl-btn-right ctrl-btn-right-active"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></div>');
         this.$ctrlMain.append('<div class="opacity ctrl-btn-right"><input class="ctrl-btn-right danmu-op" value="100" type="range" /></div>');
         $("body").append('<div id="' + this.id.slice(1, this.id.length) + 'fontTip"  hidden="true">' +
-            '<form  id="danmu-position">弹幕位置：' +
-            '<input type="radio" checked="checked"  name="danmu_position" value=0 />滚动&nbsp;&nbsp;<input type="radio" name="danmu_position" value=1 />顶端' +
-            '&nbsp;&nbsp;<input type="radio" name="danmu_position" value=2 />底端&nbsp;&nbsp;</form>' +
-            '<form  id="danmu-size" >弹幕大小：<input   type="radio" checked="checked"  name="danmu_size" value="1" />大文字&nbsp;&nbsp;' +
-            '<input   type="radio" name="danmu_size" value="0" />小文字&nbsp;&nbsp;</form>' +
+            '<form  id="danmu-position">position: ' +
+            '<input type="radio" checked="checked"  name="danmu_position" value=0 />roll&nbsp;&nbsp;<input type="radio" name="danmu_position" value=1 />top' +
+            '&nbsp;&nbsp;<input type="radio" name="danmu_position" value=2 />bottom&nbsp;&nbsp;</form>' +
+            '<form  id="danmu-size" >bullet size: <input   type="radio" checked="checked"  name="danmu_size" value="1" />large&nbsp;&nbsp;' +
+            '<input   type="radio" name="danmu_size" value="0" />small&nbsp;&nbsp;</form>' +
             '<div class="colpicker" ></div></div>');
 
 
-        //播放器状态
+        //player state
         this.video = $(this.id + " .danmu-video").get(0);
-        this.current = 0;  //当前播放时间
-        this.duration = this.video.duration;  //总时间
+        this.current = 0;  //current video time
+        this.duration = this.video.duration;  //all time
         this.danmuPlayerFullScreen = false;
         this.danmuShowed = true;
         this.isLoop = false;
         this.danmuSize = 0;
         this.danmuColor = this.options.defaultColor;
         this.danmuPosition = 0;
-        //等待层
+        //wait layer
         $(this.id + " .danmu-player-load").shCircleLoader({
             keyframes: "0%   {background:black}\
          40%  {background:transparent}\
@@ -101,7 +109,7 @@
          100% {background:black}"
         });
 
-        //tip声明
+        //tip
         var temFontTipID = this.id + "fontTip";
         $(this.id + " .opt-btn").scojs_tooltip({
             appendTo: this.id,
@@ -110,19 +118,19 @@
         });
         $(this.id + " .opacity").scojs_tooltip({
             appendTo: this.id,
-            content: '弹幕透明度'
+            content: 'bullet transparency'
         });
         $(this.id + " .show-danmu").scojs_tooltip({
             appendTo: this.id,
-            content: '开启/关闭 弹幕'
+            content: 'open/close bullet'
         });
         $(this.id + " .loop-btn").scojs_tooltip({
             appendTo: this.id,
-            content: '循环播放'
+            content: 'loop bullet'
         });
         $(this.id + " .full-screen").scojs_tooltip({
             appendTo: this.id,
-            content: '全屏'
+            content: 'fullscreen'
         });
         $(this.id + ' .colpicker').colpick({
             flat: true,
@@ -135,7 +143,7 @@
         });
 
 
-        //从后端获取弹幕
+        //get bullet from backend
         this.getDanmu = function () {
             $.get(that.options.urlToGetDanmu, function (data, status) {
                 danmuFromSql = eval(data);
@@ -153,14 +161,14 @@
         if (options.urlToGetDanmu)
             this.getDanmu();
 
-        //发送弹幕
+        //send bullet
         this.sendDanmu = function (e) {
             var text = $(e.data.that.id + " .danmu-input").get(0).value;
             if (text.length == 0) {
                 return;
             }
             if (text.length > 255){
-                alert("弹幕过长！");
+                alert("bullet too long！");
                 return;
             }
             text = text.replace(/&/g, "&gt;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/\n/g, "<br>");
@@ -177,11 +185,11 @@
             var newObj = eval('(' + textObj + ')');
             $(e.data.that.id + " .danmu-div").danmu("addDanmu", newObj);
             $(e.data.that.id + " .danmu-input").get(0).value = '';
-            //触发事件
+            //trigger event
             $(e.data.that).trigger("senddanmu");
         };
 
-        //播放暂停
+        //play pause
         this.playPause = function (e) {
             if (e.data.video.paused) {
                 e.data.video.play();
@@ -195,14 +203,14 @@
             }
         };
 
-        //主计时器
+        //main timer
         var mainTimer = setInterval(function () {
-            //缓冲条
+            //buffer
             var bufTime=$(that.id + " .danmu-video").get(0).buffered.end($(that.id + " .danmu-video").get(0).buffered.length-1);
 
             var buffPrecent = (bufTime/that.duration) * 100;
             $(that.id + ".danmu-player .ctrl-progress .buffered ").css("width", buffPrecent + "%");
-           // 时间轴修正
+           // correct time axis
            // if (Math.abs($(that.id + " .danmu-div").data("nowTime") - parseInt(that.video.currentTime)*10) > 1) {
            //     $(that.id + " .danmu-div").data("nowTime", parseInt(that.video.currentTime)*10);
            //     console.log("revise time：")
@@ -217,7 +225,7 @@
 
           //  }
         }, 50);
-        //按键事件
+        //keyboard event
         $(document).ready(function () {
             jQuery("body").keydown({that: that}, function (event) {
                 if (event.which == 13) {
@@ -229,7 +237,7 @@
         });
 
 
-        //播放事件
+        //play event
         $(this.id + " .play-btn").on("click", {video: this.video, that: that}, function (e) {
             that.playPause(e);
         });
@@ -238,7 +246,7 @@
 
         });
 
-        //waiting事件
+        //waiting event
         $(this.id + " .danmu-video").on('waiting', {that: that}, function (e) {
 
             if ($(e.data.that.id + " .danmu-video").get(0).currentTime == 0) {
@@ -252,7 +260,7 @@
 
         });
 
-        //playing事件
+        //playing event
         $(this.id + " .danmu-video").on('play playing', {that: that}, function (e) {
 
             if ($(e.data.that.id + " .danmu-video").get(0).currentTime == 0) {
@@ -267,20 +275,20 @@
         });
 
 
-        //seeked事件
+        //seeked event
         $(this.id + " .danmu-video").on('seeked ', {that: that}, function (e) {
             $(e.data.that.id + " .danmu-div").danmu("danmuHideAll");
         });
 
 
-        //调整透明度事件
+        //adjust transparency
         $(this.id + " .danmu-op").on('mouseup touchend', {that: that}, function (e) {
             $(e.data.that.id + " .danmu-div").data("opacity", (e.target.value / 100));
             $(e.data.that.id + " .danmaku").css("opacity", (e.target.value / 100));
 
         });
 
-        //全屏事件
+        //fullscreen
         $(this.id + " .full-screen").on("click", {video: this.video, that: that}, function (e) {
             if (!e.data.that.danmuPlayerFullScreen) {
                 //$css({"position":"fixed","zindex":"999","top":"0","left":"0","height":"100vh","width":"100vw"});
@@ -296,7 +304,7 @@
 
         });
 
-        //显示和隐藏弹幕按钮事件
+        //open/close bullet 
         $(this.id + " .show-danmu").on("click", {that: that}, function (e) {
             if (e.data.that.danmuShowed) {
                 $(e.data.that.id + " .danmu-div").css("visibility", "hidden");
@@ -311,7 +319,7 @@
 
         });
 
-        //循环播放按钮事件
+        //loop back video
         $(this.id + " .loop-btn").on("click", {that: that}, function (e) {
             if (!e.data.that.isLoop) {
                 e.data.that.video.loop = true;
@@ -326,7 +334,7 @@
             }
         });
 
-        //时间改变事件
+        //change video time
         $(this.id + " .danmu-video").on('loadedmetadata', {video: this.video, that: that}, function (e) {
             e.data.that.duration = e.data.video.duration;
             var duraMin = parseInt(e.data.that.duration / 60);
@@ -349,7 +357,7 @@
             });
         });
 
-        //进度条事件
+        //progress bar
         $(this.id + " .ctrl-progress").on('click', {video: this.video, that: that}, function (e) {
             var sumLen = $(e.data.that.id + " .ctrl-progress").width();
             var pos = e.pageX - $(e.data.that.id + " .ctrl-progress").offset().left;
@@ -380,17 +388,17 @@
             }
         });
 
-        //发送弹幕事件
+        //send bullet
         $(this.id + " .send-btn").on("click", {that: that}, function (e) {
             e.data.that.sendDanmu(e);
         });
 
-        //用户操作控制条事件
+        //user use control bar
         $(this.id + " .ctrl-progress").on("mouseup touchend", {that: that}, function (e) {
             $(e.data.that.id + " .danmaku").remove();
         });
 
-    };//danmuplayer构造函数
+    };//danmuplayer constructor
 
 
     DanmuPlayer.DEFAULTS = {
