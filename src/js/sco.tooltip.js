@@ -19,6 +19,7 @@
 
 /*jshint laxcomma:true, sub:true, browser:true, jquery:true, smarttabs:true, eqeqeq:false */
 
+
 ;(function($, undefined) {
 	"use strict";
 

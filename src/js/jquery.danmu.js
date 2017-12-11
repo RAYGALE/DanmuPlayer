@@ -1,7 +1,6 @@
 /**
  * 专为danmuplayer定制的jquery.danmu.js
  *
- *
  * jQuery Generic Plugin Module
  * Version 0.1
  * Copyright (c) 2011 Cyntax Technologies - http://cyntaxtech.com
