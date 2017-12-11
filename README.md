@@ -1,4 +1,4 @@
-# DanmuPlayer
+# BulletPlayer
 
 ## HTML5 Bullet Screen Video Player
 
@@ -6,7 +6,7 @@
 
 
 
-**Danmmu Player is a lightweight bullet screen player, only 63KB.**
+**BulletPlayer is a lightweight bullet screen player, only 63KB.**
 
 You can send bullet screen, adjust color, font and position
 
