@@ -292,7 +292,7 @@ If you only need to use bullet screen in other place except player, please see [
 
 ### LICENSE
 
-You can use this project in any form, but please add these two line.
+You can use this project in any form, but please add two lines below.
 
 ```html
 
