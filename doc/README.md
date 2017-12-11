@@ -297,7 +297,7 @@ You can use this project in any form, but please add two lines below.
 ```html
 
 DanmuPlayer (//github.com/chiruom/danmuplayer/) - Licensed under the MIT license
-BulletPlayer (//github.com/ScienisTmiaoT/BulletPlayer) - Licensed under the MIT license
+DanmuPlayer (//github.com/ScienisTmiaoT/DanmuPlayer) - Licensed under the MIT license
 
 ```
 
